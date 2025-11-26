@@ -5933,7 +5933,12 @@ def get_cfg_file_args(file_obj):
     # Alternatively, can override `ArgumentParser.convert_arg_line_to_args()`.
     ret = {}
     for line in file_obj:
+
+        # Remove content after the comment sign but allow escaping.
+        line = line.replace('\\#', 'ESCAPED_HASH_SIGN')
         line = line.split('#', 1)[0].strip()
+        line = line.replace('ESCAPED_HASH_SIGN', '#')
+
         if not line:
             continue
         try:
